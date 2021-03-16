@@ -1,7 +1,7 @@
 import time
 import subprocess
 
-scripts = [b"\xcc"*64] # put your commands here
+scripts = [b"\xcc"*64,b"\x44"*64] # put your commands here
 
 file = input("Input file for gdb to open: ")
 
@@ -14,10 +14,10 @@ while(True):
 
     inp = input()
 
-    if "py" in inp:
-        index = int(inp[3])
+    if "pyc" in inp:
+        index = int(inp[4])
         print(f"printing script #{index}: {scripts[index]}")
-        proc.stdin.write(scripts[int(inp[3])]+b"\n")
+        proc.stdin.write(scripts[index]+b"\n")
     else:
         proc.stdin.write(inp.encode("utf-8")+b"\n")
 
