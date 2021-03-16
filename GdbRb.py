@@ -1,4 +1,3 @@
-
 import time
 import subprocess
 
@@ -19,25 +18,33 @@ while(True):
         break
 
     elif "python -c" in inp: #you can also run scripts from the shell
-        pycmd = subprocess.Popen(inp,stdout=subprocess.PIPE)
+
+        start = inp.find("p")
+        pycmd = subprocess.Popen(inp[start:],stdout=subprocess.PIPE)
         time.sleep(2)
         response = pycmd.stdout.read1()
-        print(response.decode("utf-8"))
+
         print(f"Printing result: {response}")
-        proc.stdin.write(response+b"\n")
+        if inp[0]=="r":
+            proc.stdin.write(b"r "+response+b"\n")
+        else:
+            proc.stdin.write(response+b"\n")
 
     elif "python -s" in inp: #to load the output from your .py script
 
-        pycmd = subprocess.Popen(inp.replace("-s","") ,stdout=subprocess.PIPE)
+        pycmd = subprocess.Popen(["python",inp.split(" ")[-1]] ,stdout=subprocess.PIPE)
         time.sleep(2)
         response = pycmd.stdout.read1()
-        print(response.decode("utf-8"))
-        proc.stdin.write(response+b"\n")
+        print(f"Printing result: {response}")
+        if inp[0]=="r":
+            proc.stdin.write(b"r "+response+b"\n")
+        else:
+            proc.stdin.write(response+b"\n")
 
     elif "pyc" in inp:
 
         try:
-            index = int(inp[4])
+            index = int(inp[-1])
         except:
             print("Usage: pyc [index]")
             continue
@@ -48,7 +55,10 @@ while(True):
             print("Script not found")
             continue
         print(f"Printing command #{index}: {scripts[index]}")
-        proc.stdin.write(scripts[index]+b"\n")
+        if inp[0]=="r":
+            proc.stdin.write(b"r "+script+b"\n")
+        else:
+            proc.stdin.write(script+b"\n")
 
 
 
@@ -61,5 +71,5 @@ while(True):
 
     proc.stdin.flush()
     time.sleep(0.5)
-    print(proc.stdout.read1().decode("utf-8"),end="")
+    print(proc.stdout.read1().decode("utf-8",errors="ignorefa"),end="")
     proc.stdout.flush()
