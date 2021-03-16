@@ -1,4 +1,4 @@
-# Gdb-raw-bytes-Python-
+# Gdb raw bytes (Python)
 USAGE:
 
 1. Modify the designated array on the source code with you byte injections.
