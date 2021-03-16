@@ -6,4 +6,5 @@ USAGE:
 3. Enjoy the overflows!
 
 #note: I am aware there is a python implementention on gdb, however, if you somehow found me first and are looking for a simple no headache solution, you can use this.
+And i know, it is barebones but it should work fine.
         
