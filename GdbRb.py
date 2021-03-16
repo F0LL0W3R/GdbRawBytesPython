@@ -71,5 +71,5 @@ while(True):
 
     proc.stdin.flush()
     time.sleep(0.5)
-    print(proc.stdout.read1().decode("utf-8",errors="ignorefa"),end="")
+    print(proc.stdout.read1().decode("utf-8",errors="ignore"),end="")
     proc.stdout.flush()
