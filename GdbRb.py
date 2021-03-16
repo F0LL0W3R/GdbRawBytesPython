@@ -1,3 +1,4 @@
+
 import time
 import subprocess
 
@@ -18,20 +19,19 @@ while(True):
         break
 
     elif "python -c" in inp: #you can also run scripts from the shell
-        pycmd = subprocess.run(inp,stdin=subprocess.PIPE,stdout=subprocess.PIPE)
+        pycmd = subprocess.Popen(inp,stdout=subprocess.PIPE)
         time.sleep(2)
-        response = pycmd.stdout
-
+        response = pycmd.stdout.read1()
+        print(response.decode("utf-8"))
         print(f"Printing result: {response}")
         proc.stdin.write(response+b"\n")
 
     elif "python -s" in inp: #to load the output from your .py script
 
-        pycmd = subprocess.run(inp.replace("-s","") ,stdin=subprocess.PIPE,stdout=subprocess.PIPE)
+        pycmd = subprocess.Popen(inp.replace("-s","") ,stdout=subprocess.PIPE)
         time.sleep(2)
-        response = pycmd.stdout
-
-        print(f"Printing result: {response}")
+        response = pycmd.stdout.read1()
+        print(response.decode("utf-8"))
         proc.stdin.write(response+b"\n")
 
     elif "pyc" in inp:
