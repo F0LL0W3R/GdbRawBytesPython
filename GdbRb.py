@@ -16,7 +16,7 @@ while(True):
 
     if "pyc" in inp:
         index = int(inp[4])
-        print(f"printing script #{index}: {scripts[index]}")
+        print(f"Printing command #{index}: {scripts[index]}")
         proc.stdin.write(scripts[index]+b"\n")
     else:
         proc.stdin.write(inp.encode("utf-8")+b"\n")
