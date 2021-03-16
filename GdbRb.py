@@ -14,9 +14,27 @@ while(True):
 
     inp = input()
     if inp == "quit":
-        
+
         break
-    if "pyc" in inp:
+
+    elif "python -c" in inp: #you can also run scripts from the shell
+        pycmd = subprocess.run(inp,stdin=subprocess.PIPE,stdout=subprocess.PIPE)
+        time.sleep(2)
+        response = pycmd.stdout
+
+        print(f"Printing result: {response}")
+        proc.stdin.write(response+b"\n")
+
+    elif "python -s" in inp: #to load the output from your .py script
+
+        pycmd = subprocess.run(inp.replace("-s","") ,stdin=subprocess.PIPE,stdout=subprocess.PIPE)
+        time.sleep(2)
+        response = pycmd.stdout
+
+        print(f"Printing result: {response}")
+        proc.stdin.write(response+b"\n")
+
+    elif "pyc" in inp:
 
         try:
             index = int(inp[4])
@@ -29,9 +47,10 @@ while(True):
         except:
             print("Script not found")
             continue
-
         print(f"Printing command #{index}: {scripts[index]}")
         proc.stdin.write(scripts[index]+b"\n")
+
+
 
 
 
@@ -41,6 +60,6 @@ while(True):
 
 
     proc.stdin.flush()
-    time.sleep(0.1)
+    time.sleep(0.5)
     print(proc.stdout.read1().decode("utf-8"),end="")
     proc.stdout.flush()
