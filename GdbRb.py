@@ -13,11 +13,29 @@ proc.stdout.flush()
 while(True):
 
     inp = input()
-
+    if inp == "quit":
+        
+        break
     if "pyc" in inp:
-        index = int(inp[4])
+
+        try:
+            index = int(inp[4])
+        except:
+            print("Usage: pyc [index]")
+            continue
+
+        try:
+            script = scripts[index]
+        except:
+            print("Script not found")
+            continue
+
         print(f"Printing command #{index}: {scripts[index]}")
         proc.stdin.write(scripts[index]+b"\n")
+
+
+
+
     else:
         proc.stdin.write(inp.encode("utf-8")+b"\n")
 
